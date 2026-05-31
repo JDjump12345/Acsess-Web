@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+  <link rel="stylesheet" href="style.css">
+  <title>hi</title>
+      <link rel="icon" type="image/x-icon" href="/ico.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+ <div class="title-bar">
+    <div class="title-text">My Custom App</div>
+    <div class="title-bar-actions">
+      <button id="minimize-app">🗕</button>
+      <button id="closeBtn">✕</button>
+    </div>
+  </div>
+  <div id="navbar">
+        <button id="newtab" onclick="createTab()">+</button>
+    <button id="back" onclick="goBack()">◀</button>
+    <button id="forward" onclick="goForward()">▶</button>
+    <button id="reload" onclick="refresh()">⟳</button>
+    <input id="url" type="text" value="https://google.com" />
+    <button id="go" onclick="goToUrl()">Go</button>
+        <button id="bookmark" onclick="bookmark()">☆</button>
+        <button id="saved" onclick="showSavedBookmarks()"></button>
+
+  </div>
+<div id="bookmarks-list" style="display:none;">
+  <h2>Saved Bookmarks</h2>
+</div>
+<div id="tabs"></div>
+<div id="webview-container" class="webview-container"></div>
+
+    <script src="./renderer.js"></script>
+</body>
+</html>
