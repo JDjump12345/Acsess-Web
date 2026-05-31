@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, webContents } = require('electron');
 const path = require('node:path');
 
 let mainWindow; // <-- FIX: declare globally
@@ -33,6 +33,33 @@ app.whenReady().then(() => {
   // Minimize app
   ipcMain.on('minimize', () => {
     if (mainWindow) mainWindow.minimize();
+  });
+
+  ipcMain.handle('cookies-get', async (event, webContentsId, url) => {
+    const targetContents = webContents.fromId(webContentsId);
+    if (!targetContents) {
+      throw new Error('WebContents not found');
+    }
+    return targetContents.session.cookies.get({ url });
+  });
+
+  ipcMain.handle('cookies-clear', async (event, webContentsId, url) => {
+    const targetContents = webContents.fromId(webContentsId);
+    if (!targetContents) {
+      throw new Error('WebContents not found');
+    }
+    const origin = new URL(url).origin;
+    await targetContents.session.clearStorageData({ storages: ['cookies'], origins: [origin] });
+    return { success: true };
+  });
+
+  ipcMain.handle('cookies-set', async (event, webContentsId, cookie) => {
+    const targetContents = webContents.fromId(webContentsId);
+    if (!targetContents) {
+      throw new Error('WebContents not found');
+    }
+    await targetContents.session.cookies.set(cookie);
+    return { success: true };
   });
 
   app.on('activate', () => {

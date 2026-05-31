@@ -9,10 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
-<body>
+<body onload="initTabs()">
 
  <div class="title-bar">
-    <div class="title-text">My Custom App</div>
+    <div class="title-text">Acsess Web</div>
     <div class="title-bar-actions">
       <button id="minimize-app">🗕</button>
       <button id="closeBtn">✕</button>
@@ -27,14 +27,31 @@
     <button id="go" onclick="goToUrl()">Go</button>
         <button id="bookmark" onclick="bookmark()">☆</button>
         <button id="saved" onclick="showSavedBookmarks()"></button>
+        <button id="cookies" onclick="toggleCookiesPanel()">🍪</button> <!-- Tbh this is only here bc if i remove it then everything breaks -->
+        <button onclick="window.location.href='settings.html'">*</button>
 
   </div>
 <div id="bookmarks-list" style="display:none;">
   <h2>Saved Bookmarks</h2>
 </div>
+<div id="cookie-panel" class="cookie-panel hidden">
+  <div class="cookie-panel-header">
+    <h2>Cookies</h2>
+    <div class="cookie-panel-actions">
+      <button id="refresh-cookies" type="button">Refresh</button>
+      <button id="clear-cookies" type="button">Clear Cookies</button>
+    </div>
+  </div>
+  <div id="cookie-status" class="cookie-status">No active tab selected.</div>
+  <div id="cookie-list" class="cookie-list"></div>
+  <form id="set-cookie-form" class="cookie-form">
+    <input id="cookie-name" type="text" placeholder="Name" />
+    <input id="cookie-value" type="text" placeholder="Value" />
+    <button id="set-cookie" type="submit">Set Cookie</button>
+  </form>
+</div>
 <div id="tabs"></div>
-<div id="webview-container" class="webview-container"></div>
-
+<div id="WebContentsView" class="webview-container"></div>
     <script src="./renderer.js"></script>
 </body>
 </html>

@@ -1,13 +1,13 @@
-const ipc = require('electron').ipcRenderer
+const { ipcRenderer } = require('electron');
 
 // close app
 function closeApp(e) {
   e.preventDefault();
-  ipc.send('close');
+  ipcRenderer.send('close');
 }
 
 function minApp(e) {
-  ipc.send('minimize');
+  ipcRenderer.send('minimize');
 }
 
 document.getElementById('closeBtn').addEventListener('click', closeApp);
@@ -20,6 +20,10 @@ document.getElementById('go').addEventListener('click', () => {
 document.getElementById('back').addEventListener('click', () => goBack());
 document.getElementById('forward').addEventListener('click', () => goForward());
 document.getElementById('reload').addEventListener('click', () => refresh());
+document.getElementById('cookies').addEventListener('click', () => toggleCookiesPanel());
+document.getElementById('refresh-cookies').addEventListener('click', () => refreshCookies());
+document.getElementById('clear-cookies').addEventListener('click', () => clearCookies());
+document.getElementById('set-cookie-form').addEventListener('submit', (event) => setCookie(event));
 
 let jsonBookmarks = [];
 const tabs = [];
@@ -125,6 +129,42 @@ function showSavedBookmarks() {
   renderBookmarks();
 }
 
+function toggleCookiesPanel() {
+  const panel = document.getElementById('cookie-panel');
+  const isVisible = panel.classList.toggle('visible');
+  panel.style.display = isVisible ? 'flex' : 'none';
+  if (isVisible) {
+    refreshCookies();
+  }
+}
+
+function updateCookieStatus(message) {
+  const status = document.getElementById('cookie-status');
+  if (status) status.textContent = message;
+}
+
+function renderCookies(cookies) {
+  const list = document.getElementById('cookie-list');
+  list.innerHTML = '';
+
+  if (!cookies || !cookies.length) {
+    list.innerHTML = '<div class="cookie-item">No cookies found for this tab.</div>';
+    return;
+  }
+
+  cookies.forEach((cookie) => {
+    const item = document.createElement('div');
+    item.className = 'cookie-item';
+    item.innerHTML = `
+      <div><strong>${cookie.name}</strong>=${cookie.value}</div>
+      <div>Domain: ${cookie.domain}</div>
+      <div>Path: ${cookie.path}</div>
+      <div>${cookie.secure ? 'Secure' : 'Not secure'} · ${cookie.httpOnly ? 'HttpOnly' : 'Readable'}</div>
+    `;
+    list.appendChild(item);
+  });
+}
+
 function getActiveTab() {
   return tabs.find((tab) => tab.id === activeTabId) || tabs[0] || null;
 }
@@ -139,6 +179,9 @@ function getTabLabel(url) {
 }
 
 function initTabs() {
+  loadBookmarks();
+  renderBookmarks();
+
   if (!tabs.length) {
     createTab(document.getElementById('url').value || 'https://www.google.com');
   }
@@ -146,7 +189,7 @@ function initTabs() {
 
 function createTab(url = 'https://www.google.com') {
   const tabsContainer = document.getElementById('tabs');
-  const webviewContainer = document.getElementById('webview-container');
+  const webviewContainer = document.getElementById('WebContentsView');
   const tabId = `tab-${Date.now()}-${tabs.length}`;
 
   const button = document.createElement('button');
@@ -255,4 +298,99 @@ function goForward() {
   if (activeTab && activeTab.webview.canGoForward()) {
     activeTab.webview.goForward();
   }
+}
+
+async function refreshCookies() {
+  const activeTab = getActiveTab();
+  if (!activeTab) {
+    updateCookieStatus('No active tab selected.');
+    renderCookies([]);
+    return;
+  }
+
+  const url = activeTab.webview.getURL() || activeTab.url;
+  const webContentsId = activeTab.webview.getWebContentsId?.();
+  if (!url || !webContentsId) {
+    updateCookieStatus('Unable to determine active tab URL or web contents.');
+    renderCookies([]);
+    return;
+  }
+
+  try {
+    const cookies = await ipcRenderer.invoke('cookies-get', webContentsId, url);
+    renderCookies(cookies);
+    updateCookieStatus(`${cookies.length} cookies found for ${new URL(url).hostname}`);
+  } catch (err) {
+    console.error('Failed to load cookies:', err);
+    updateCookieStatus('Failed to load cookies.');
+    renderCookies([]);
+  }
+}
+
+async function clearCookies() {
+  const activeTab = getActiveTab();
+  if (!activeTab) {
+    updateCookieStatus('No active tab selected.');
+    return;
+  }
+
+  const url = activeTab.webview.getURL() || activeTab.url;
+  const webContentsId = activeTab.webview.getWebContentsId?.();
+  if (!url || !webContentsId) {
+    updateCookieStatus('Unable to determine active tab URL or web contents.');
+    return;
+  }
+
+  try {
+    await ipcRenderer.invoke('cookies-clear', webContentsId, url);
+    updateCookieStatus('Cookies cleared.');
+    refreshCookies();
+  } catch (err) {
+    console.error('Failed to clear cookies:', err);
+    updateCookieStatus('Failed to clear cookies.');
+  }
+}
+
+async function setCookie(event) {
+  event.preventDefault();
+  const activeTab = getActiveTab();
+  if (!activeTab) {
+    updateCookieStatus('No active tab selected.');
+    return;
+  }
+
+  const url = activeTab.webview.getURL() || activeTab.url;
+  const webContentsId = activeTab.webview.getWebContentsId?.();
+  const name = document.getElementById('cookie-name').value.trim();
+  const value = document.getElementById('cookie-value').value.trim();
+
+  if (!url || !webContentsId) {
+    updateCookieStatus('Unable to determine active tab URL or web contents.');
+    return;
+  }
+
+  if (!name || !value) {
+    updateCookieStatus('Cookie name and value are required.');
+    return;
+  }
+
+  try {
+    await ipcRenderer.invoke('cookies-set', webContentsId, { url, name, value });
+    document.getElementById('cookie-name').value = '';
+    document.getElementById('cookie-value').value = '';
+    updateCookieStatus(`Cookie set: ${name}`);
+    refreshCookies();
+  } catch (err) {
+    console.error('Failed to set cookie:', err);
+    updateCookieStatus('Failed to set cookie.');
+  }
+}
+/// stop looking at my code nerd
+
+
+function saveSettings() {
+// stuff for settings value (like on or off)
+const magnifierEnabled = document.getElementById('enable-magnifier').checked;
+localStorage.setItem('magnifierEnabled', magnifierEnabled);
+
 }
