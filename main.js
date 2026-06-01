@@ -35,6 +35,8 @@ app.whenReady().then(() => {
     if (mainWindow) mainWindow.minimize();
   });
 
+///ipcMain.on('')
+//// thinking of adding another buttons PS: if your reading this msg me on slack and tell me what you think and also tell me what the button should do
   ipcMain.handle('cookies-get', async (event, webContentsId, url) => {
     const targetContents = webContents.fromId(webContentsId);
     if (!targetContents) {

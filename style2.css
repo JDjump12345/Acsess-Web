@@ -1,0 +1,226 @@
+ html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      scrollbar-width: none;       /* Hides scrollbar in Firefox */
+      -ms-overflow-style: none;    /* Hides scrollbar in IE and Edge */
+    }
+
+body {
+      display: flex;
+      flex-direction: column;
+      font-family: sans-serif;
+      border-radius: 0px;
+      overflow: hidden;
+      background-color: #223;
+    }
+
+    .title-bar {
+      height: 40px;
+      background-color: #222;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 15px;
+      /* Makes this area draggable */
+      -webkit-app-region: drag; 
+    }
+    .title-bar-actions {
+      /* Disables dragging for buttons so they remain clickable */
+      -webkit-app-region: no-drag;
+    }
+
+
+    /* ------------------ CLOSE BUTTON START -------------------- */
+#closeBtn{
+      background-color: #222; /* Green */
+color: lightslategrey;
+      transition-duration: 0.4s;
+
+}
+#closeBtn:hover{
+  background-color: red; /* Green */
+        transition-duration: 0.4s;
+        color: lightslategrey;
+}
+    /* ----------------- CLOSE BUTTON END -------------------- */
+
+
+
+    /* ----------------- MIN BUTTON START -------------------- */
+#minimize-app{
+      background-color: #222; /* Green */
+color: lightslategrey;
+      transition-duration: 0.4s;
+
+}
+#minimize-app:hover{
+  background-color: #555; /* Green */
+        transition-duration: 0.4s;
+        color: lightslategrey;
+}
+    /* ----------------- MIN BUTTON END -------------------- */
+
+
+        #navbar { display: flex; padding: 5px; gap: 5px; background: #333; height: 35px; align-items: center; }
+    input { flex: 1; padding: 5px; border-radius: 4px; border: none; }
+    button { padding: 5px 10px; background: #555; color: white; border: none; cursor: pointer; border-radius: 4px; }
+
+          webview, .my-webview {
+              display: flex;
+              width: 100%;
+              flex: 1 1 auto;
+              min-height: 0;
+              border: none;
+          }
+#bookmarks-list {
+  background: #333;
+  color: white;
+  padding: 0px;}
+  
+  .bookmark-item a {
+    color: rgb(169 169 206);
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px;
+      background: #555;
+      height:3vh;
+
+  }
+    .bookmark-item a :visited {
+    color: rgb(169 169 206);
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px;
+      background: #555;
+      height:3vh;
+
+  }
+
+  #tabs {
+    display: flex;
+    gap: 4px;
+    padding: 6px;
+    background: #111;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .tab-button {
+    position: relative;
+    padding: 6px 28px 6px 10px;
+    background: #444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .tab-button.active-tab {
+    background: #666;
+  }
+
+  .tab-close {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #ccc;
+    padding: 0 4px;
+  }
+
+  .tab-close:hover {
+    color: white;
+  }
+
+  #WebContentsView {
+    flex: 1 1 auto;
+    display: flex;
+    min-height: 0;
+  }
+
+  #WebContentsView .my-webview {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .cookie-panel {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    background: #1f1f2f;
+    color: #fff;
+    border-bottom: 1px solid #444;
+  }
+
+  .cookie-panel.visible {
+    display: flex;
+  }
+
+  .cookie-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .cookie-panel-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .cookie-list {
+    max-height: 180px;
+    overflow-y: auto;
+    padding: 10px;
+    background: #161625;
+    border-radius: 8px;
+    border: 1px solid #333;
+  }
+
+  .cookie-item {
+    margin-bottom: 8px;
+    padding: 8px;
+    background: #252539;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  .cookie-item strong {
+    color: #dcdcdc;
+  }
+
+  .cookie-status {
+    color: #ccc;
+    font-size: 0.9rem;
+  }
+
+  .cookie-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .cookie-form input {
+    flex: 1 1 180px;
+    min-width: 140px;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    background: #2f2f45;
+    color: white;
+  }
+
+  .cookie-form button {
+    padding: 8px 14px;
+  } 
+  
+
+
+
+

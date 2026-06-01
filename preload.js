@@ -4,40 +4,41 @@ const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('electronAPI', {
   closeApp: () => ipcRenderer.send('close-app')
 });
-/*
-function loadSettings() {
-const talkbackEnabled = localStorage.getItem('talkbackEnabled') === 'true';
-if (talkbackEnabled) {
-let voice = new SpeechSynthesisUtterance();
-const textmouseisover = document.querySelectorAll(':hover')[0];
- /// when keypress of `, read the text under mouse
- document.addEventListener('keypress', (e) => {
-  if (e.key === '`') {
-const textmouseisover = document.querySelectorAll(':hover')[0];
-voice.text = textmouseisover.textContent || textmouseisover.innerText || "No text found under mouse.";
-window.speechSynthesis.speak(voice);
-  }
-});
-voice.text = textmouseisover.textContent || textmouseisover.innerText || "No text found under mouse.";
-window.speechSynthesis.speak(voice);
-}
-}
-*/
+
+/// DO NOT MODIFY CODE ABOVE THIS LINE IT IS TO HANDE THE WINDOWS CONTROL BUTTONS
 document.onkeypress = function(e) {
-  if (e.key === 'Enter') {
-    goToUrl();
+  if (e.key === 'q') {
+    createTab(); // ts is useless it dont even work rn
   }
 };
 document.onkeypress = function(e) {
-  if (e.key === 'q') {
-    ReadForMe();
-  }
+  if (e.key === '~') {
+
+    ReadForMe(); /// function that reads the selected test (if the setting is on)
+}
+  
 };
 function ReadForMe()  {
 let voice = new SpeechSynthesisUtterance();
+checkimgalt();
 window.getSelection().toString();
 voice.text = window.getSelection().toString() || "No text selected.";
 window.speechSynthesis.speak(voice);
 }
 
-/// ima go do research on how to make the talkback read stuff even in the webview tag
+function checkimgalt() {
+  const images = document.querySelectorAll('img');
+  images.forEach(img => {
+    img.addEventListener('mouseover', () => {
+      const altText = img.getAttribute('alt');
+    console.log('Mouse over image with alt text:', altText);
+      if (altText) {
+        let voice = new SpeechSynthesisUtterance();
+        voice.text = altText;
+        window.speechSynthesis.speak(voice);
+      }
+    });
+  });
+}
+
+/// ima go do research on how to make the talkback read stuff even in the webview tag turns out all i had to do is add it to preload i guess, and then it works in the webview tag too, which is pretty cool ngl. also added a setting to turn it on and off (settings page is very basic for now, but it works) 

@@ -277,7 +277,6 @@ function goToUrl() {
   // also go to it when user presses enter
   document.getElementById('url').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-      goToUrl();
     }
   })};
 
@@ -393,7 +392,6 @@ function saveSettings() {
 // stuff for settings value (like on or off)
 const talkbackEnabled = document.getElementById('enable-talkback').checked.toString(); // save as string
 localStorage.setItem('talkbackEnabled', talkbackEnabled);
-
 }
 function injectTextReadWebview(){
 // this will inject the code to webview to read whatever the mouse is over
@@ -411,17 +409,27 @@ if (talkbackEnabled) {
 
 }}
 function ReadForMe()  {
+  const talkbackEnabled = localStorage.getItem('talkbackEnabled') === 'true';
+  if (talkbackEnabled) {
+
 let voice = new SpeechSynthesisUtterance();
 window.getSelection().toString();
 voice.text = window.getSelection().toString() || "No text selected.";
 window.speechSynthesis.speak(voice);
 }
-
+}
 /// gave up for the day on 5/31/26 at 9:54
 /// picked up for the day at 12:19 AM 6/1/26 (YAY PRIDE MONTH!!!!!)
 /// added a magnifier to the browser, and a settings page to turn it on and off (settings page is very basic for now, but it works)
 
+function entertourl() {
+ document.getElementById('url').addEventListener('keypress', (e) => {
+    if (e.key === '!') {
+      goToUrl();
+    }
+  });
+} 
+  
 
 
 
-// adding this so it will update/save the settings when the user clicks the save button on the settings page, and also load the settings when the user opens the settings page
