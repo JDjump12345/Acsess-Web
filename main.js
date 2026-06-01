@@ -9,7 +9,6 @@ function createWindow() {
     frame: false,
 
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
       contextIsolation: false,
             webviewTag: true
@@ -19,6 +18,7 @@ function createWindow() {
 
   mainWindow.loadFile('index.html');
   mainWindow.webContents.openDevTools({ mode: 'detach' })
+
 
 }
 

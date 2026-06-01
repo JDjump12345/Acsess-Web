@@ -12,7 +12,7 @@
 </head>
 
   
-<body onload="initTabs()" >
+<body onload="createTab(); loadSettings();">
 
  <div class="title-bar">
     <div class="title-text">Acsess Web</div>
@@ -54,19 +54,23 @@
   </form>
 </div>
 <div id="tabs"></div>
-<div id="WebContentsView" class="webview-container"></div>
-<magnifier class="magnify_glass"></magnifier>
+<div id="WebContentsView" class="webview-container" preload="./preload.js"></div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="./renderer.js"></script>
+    <script src="renderer.js"></script>
+
     <script>
-        loadSettings();
+      loadSettings();
     </script>
+    <script>
+
+      </script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="jquery.jfMagnify.js"></script>
 
-<script>jfMagnify();</script>
+
 <!-- NERD -->
 </body>
 </html>

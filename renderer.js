@@ -217,6 +217,7 @@ function createTab(url = 'https://www.google.com') {
   webview.src = url;
   webview.className = 'my-webview';
   webview.style.display = 'none';
+  webview.preload = 'preload.js';
   webviewContainer.appendChild(webview);
 
   tabs.push({ id: tabId, url, button, webview });
@@ -390,48 +391,37 @@ async function setCookie(event) {
 
 function saveSettings() {
 // stuff for settings value (like on or off)
-const magnifierEnabled = document.getElementById('enable-magnifier').checked.toString(); // save as string
-localStorage.setItem('magnifierEnabled', magnifierEnabled);
+const talkbackEnabled = document.getElementById('enable-talkback').checked.toString(); // save as string
+localStorage.setItem('talkbackEnabled', talkbackEnabled);
 
 }
-
-function loadSettings() {
-const isHidden = localStorage.getItem('magnifierEnabled') === 'true';
-if (isHidden) {
-      document.getElementsByTagName('magnifier')[0].style.display = 'flex'
-      const freeBox = document.getElementsByTagName('magnifier')[0];
-      let isDragging = false;
-      let offsetX, offsetY;
-      let zoomlevel = 2; // Adjust this value to set the zoom level
-freeBox.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  offsetX = e.clientX - freeBox.offsetLeft;
-  offsetY = e.clientY - freeBox.offsetTop;
-  freeBox.style.cursor = 'grabbing';
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (!isDragging) return;
-  freeBox.style.left = `${e.clientX - offsetX}px`;
-  freeBox.style.top = `${e.clientY - offsetY}px`;
-});
-
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-  freeBox.style.cursor = 'grab';
-  zoommagnifier();
-});
-
+function injectTextReadWebview(){
+// this will inject the code to webview to read whatever the mouse is over
+///afk
+/// if anything here my cat typed it: My cats did not leave anything 4 u heheheheh
+/// lowkey ima see if i can just do this in load settings 
 }
-function zoommagnifier() {
-const magnifier = document.getElementsByTagName('magnifier')[0];
-let zoomlevel = 50; // Adjust this value to set the zoom level
 
-};
+
+
+
+ function loadSettings() { 
+const talkbackEnabled = localStorage.getItem('talkbackEnabled') === 'true';
+if (talkbackEnabled) {
+
+}}
+function ReadForMe()  {
+let voice = new SpeechSynthesisUtterance();
+window.getSelection().toString();
+voice.text = window.getSelection().toString() || "No text selected.";
+window.speechSynthesis.speak(voice);
+}
+
 /// gave up for the day on 5/31/26 at 9:54
 /// picked up for the day at 12:19 AM 6/1/26 (YAY PRIDE MONTH!!!!!)
 /// added a magnifier to the browser, and a settings page to turn it on and off (settings page is very basic for now, but it works)
 
-}
 
-// adding this so it will update
+
+
+// adding this so it will update/save the settings when the user clicks the save button on the settings page, and also load the settings when the user opens the settings page

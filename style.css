@@ -220,14 +220,7 @@ color: lightslategrey;
     padding: 8px 14px;
   }
 
-magnifier {
-  position: absolute;
-  border: 3px solid #000;
-  border-radius: 50%;
-  cursor: none;
-  /*Set the size of the magnifier glass:*/
-  width: 100px;
-  height: 100px;
-  display: none;
-}
+
 /* adding this so it will update */
+
+
