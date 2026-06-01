@@ -390,18 +390,46 @@ async function setCookie(event) {
 
 function saveSettings() {
 // stuff for settings value (like on or off)
-const magnifierEnabled = document.getElementById('enable-magnifier').checked;
+const magnifierEnabled = document.getElementById('enable-magnifier').checked.toString(); // save as string
 localStorage.setItem('magnifierEnabled', magnifierEnabled);
 
 }
 
 function loadSettings() {
-  const magnifier = document.getElementById('magnifier');
+const isHidden = localStorage.getItem('magnifierEnabled') === 'true';
+if (isHidden) {
+      document.getElementsByTagName('magnifier')[0].style.display = 'flex'
+      const freeBox = document.getElementsByTagName('magnifier')[0];
+      let isDragging = false;
+      let offsetX, offsetY;
+      let zoomlevel = 2; // Adjust this value to set the zoom level
+freeBox.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  offsetX = e.clientX - freeBox.offsetLeft;
+  offsetY = e.clientY - freeBox.offsetTop;
+  freeBox.style.cursor = 'grabbing';
+});
 
-  if (localStorage.getItem('magnifierEnabled') === 'true') {
-    magnifier.style.display = 'flex';
-  } else {
-    magnifier.style.display = 'none';
-  }
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  freeBox.style.left = `${e.clientX - offsetX}px`;
+  freeBox.style.top = `${e.clientY - offsetY}px`;
+});
+
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+  freeBox.style.cursor = 'grab';
+  zoommagnifier();
+});
+
 }
+function zoommagnifier() {
+const magnifier = document.getElementsByTagName('magnifier')[0];
+let zoomlevel = 50; // Adjust this value to set the zoom level
+
+};
 /// gave up for the day on 5/31/26 at 9:54
+/// picked up for the day at 12:19 AM 6/1/26 (YAY PRIDE MONTH!!!!!)
+/// added a magnifier to the browser, and a settings page to turn it on and off (settings page is very basic for now, but it works)
+
+}
