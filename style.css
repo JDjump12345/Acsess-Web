@@ -220,3 +220,13 @@ color: lightslategrey;
     padding: 8px 14px;
   }
 
+#magnifier {
+  border: 2px solid #555;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  cursor: grab;
+}

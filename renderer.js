@@ -394,3 +394,14 @@ const magnifierEnabled = document.getElementById('enable-magnifier').checked;
 localStorage.setItem('magnifierEnabled', magnifierEnabled);
 
 }
+
+function loadSettings() {
+  const magnifier = document.getElementById('magnifier');
+
+  if (localStorage.getItem('magnifierEnabled') === 'true') {
+    magnifier.style.display = 'flex';
+  } else {
+    magnifier.style.display = 'none';
+  }
+}
+/// gave up for the day on 5/31/26 at 9:54

@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
 
   <link rel="stylesheet" href="style.css">
+
   <title>hi</title>
       <link rel="icon" type="image/x-icon" href="/ico.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
-<body onload="initTabs()">
+
+  
+<body onload="initTabs(); loadSettings()" >
 
  <div class="title-bar">
     <div class="title-text">Acsess Web</div>
@@ -52,6 +55,9 @@
 </div>
 <div id="tabs"></div>
 <div id="WebContentsView" class="webview-container"></div>
+<div id="magnifier" class="magnifier"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./renderer.js"></script>
 </body>
 </html>
