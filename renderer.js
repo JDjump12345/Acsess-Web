@@ -433,3 +433,5 @@ let zoomlevel = 50; // Adjust this value to set the zoom level
 /// added a magnifier to the browser, and a settings page to turn it on and off (settings page is very basic for now, but it works)
 
 }
+
+// adding this so it will update
