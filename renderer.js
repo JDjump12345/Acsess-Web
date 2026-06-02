@@ -6,12 +6,30 @@ function closeApp(e) {
   ipcRenderer.send('close');
 }
 
+function closeApp(e) {
+  e.preventDefault();
+  ipcRenderer.send('close');
+}
+
 function minApp(e) {
   ipcRenderer.send('minimize');
+}
+function OpenSettings(e) {
+document.getElementById('settingsPanel').style.display = 'block';
+}
+function OpenMenu(e) {
+document.getElementById('MenuPanel').style.display = 'block';
+}
+
+function MenuClose(e) {
+document.getElementById('MenuPanel').style.display = 'none';
 }
 
 document.getElementById('closeBtn').addEventListener('click', closeApp);
 document.getElementById('minimize-app').addEventListener('click', minApp);
+document.getElementById('SettingBtn').addEventListener('click', OpenSettings);
+document.getElementById('MenuBtn').addEventListener('click', OpenMenu);
+
 
 document.getElementById('go').addEventListener('click', () => {
   goToUrl();
@@ -392,6 +410,7 @@ function saveSettings() {
 // stuff for settings value (like on or off)
 const talkbackEnabled = document.getElementById('enable-talkback').checked.toString(); // save as string
 localStorage.setItem('talkbackEnabled', talkbackEnabled);
+document.getElementById('settingsPanel').style.display = 'none';
 }
 function injectTextReadWebview(){
 // this will inject the code to webview to read whatever the mouse is over

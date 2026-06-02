@@ -223,4 +223,65 @@ color: lightslategrey;
 
 /* adding this so it will update */
 
+.settings-panel {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    width: 250px;
+    background: #1f1f2f;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    z-index: 1000;
+  }
 
+  .settings-panel h2 {
+    margin-top: 0;
+  }
+
+  .settings-panel label {
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .settings-panel input[type="checkbox"] {
+    margin-right: 6px;
+  }
+
+  .settings-panel button {
+    margin-top: 10px;
+  }
+
+  .Menu-panel {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    width: 250px;
+    background: #1f1f2f;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    z-index: 1000;
+  }
+.cookie-panel {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    background: #1f1f2f;
+    color: #fff;
+    border-bottom: 1px solid #444;
+  }
+
+  .cookie-panel.visible {
+    display: flex;
+  }
+
+  .cookie-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }

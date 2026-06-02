@@ -17,8 +17,11 @@
  <div class="title-bar">
     <div class="title-text">Acsess Web</div>
     <div class="title-bar-actions">
+                  <button id="SettingBtn">⚙</button>
+<button id="MenuBtn">☰</button>
       <button id="minimize-app">🗕</button>
       <button id="closeBtn">✕</button>
+
     </div>
   </div>
   <div id="navbar">
@@ -30,10 +33,20 @@
     <button id="go" onclick="goToUrl()">Go</button>
         <button id="bookmark" onclick="bookmark()">☆</button>
         <button id="saved" onclick="showSavedBookmarks()"></button>
-        <button id="cookies" onclick="toggleCookiesPanel()">🍪</button> <!-- Tbh this is only here bc if i remove it then everything breaks -->
-        <button onclick="window.location.href='settings.html'">*</button>
 
   </div>
+  <div class="settings-panel" id="settingsPanel" style="display:none;">
+  <h2>Settings</h2>
+        <label for="enable-talkback">Enable TalkBack</label>
+        <input type="checkbox" id="enable-talkback" />
+        <button id="save-settings" onclick="saveSettings()">Save Settings</button>
+</div>
+ <div class="Menu-panel" id="MenuPanel" style="display:none;">
+  <h2>Menu</h2>
+        <button id="cookies" onclick="toggleCookiesPanel()">Manage cookies PS: this button dont work rn</button> 
+
+        <button id="MenuCloseBtn" onclick="MenuClose()">Close Menu</button>
+</div>
 <div id="bookmarks-list" style="display:none;">
   <h2>Saved Bookmarks</h2>
 </div>
