@@ -64,6 +64,16 @@ app.whenReady().then(() => {
     return { success: true };
   });
 
+  ipcMain.handle('download-file', async (event, url) => {
+    downloadItem = await mainWindow.webContents.downloadURL(url);
+    console.log(`Download started for URL: ${url}`);
+  });
+
+  ipcMain.handle('decline-download', async (event, url) => {
+    // Implementation for handling decline download request
+    console.log(`Download declined for URL: ${url}`);
+  });
+
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
